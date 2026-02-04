@@ -1,0 +1,53 @@
+module.exports = {
+  private_chat_message:
+    "Чтобы отправить заявку, напишите мне в личные сообщения 👇",
+  private_chat_btn: "✉️ Написать боту",
+
+  keep_btn: "➡️ Оставить без изменений",
+
+  main_menu_text:
+    "Привет! 👋 Я бот Serwis S.O.M.\nПомогу отправить заявку или запрос на расчёт стоимости ремонта.",
+
+  name_question: "Введите ваше имя (не менее {min} букв):",
+  phone_question: "Введите номер телефона (не менее {min} цифр):",
+  car_name_question: "Введите марку и модель авто (например, Volkswagen Golf):",
+  engine_question: "Введите тип двигателя (например, 1.4 TSI, 2.0 TDI):",
+  vin_question: "Введите VIN-номер (можно пропустить):",
+  problem_question: "Опишите проблему или услугу (не менее {min} символов):",
+
+  name_error:
+    "Имя должно содержать не менее {min} букв и не должно содержать цифр.",
+  phone_error: "Введите корректный номер телефона (не менее {min} цифр).",
+  car_name_error:
+    "Марка и модель авто должны содержать не менее {min} символов.",
+  engine_error: "Описание двигателя должно содержать не менее {min} символов.",
+  vin_error: "VIN должен содержать не менее {min} символов.",
+  problem_error: "Описание должно содержать не менее {min} символов.",
+
+  send_request_btn: "📄 Отправить заявку или запрос",
+  change_lang_btn: "🌐 Изменить язык",
+
+  choose_lang: "Выберите язык:",
+  lang_pl: "🇵🇱 Polski",
+  lang_en: "🇬🇧 English",
+  lang_ua: "🇺🇦 Українська",
+  lang_ru: "🇷🇺 Русский",
+  lang_saved: "✅ Язык изменён.",
+
+  summary_title: "📋 Проверьте данные:",
+  summary_name: "👤 Имя",
+  summary_phone: "📞 Телефон",
+  summary_car: "🚗 Авто",
+  summary_engine: "⚙️ Двигатель",
+  summary_vin: "🔢 VIN",
+  summary_problem: "🛠 Описание проблемы",
+
+  summary_send_btn: "✅ Отправить",
+  summary_edit_btn: "✏️ Редактировать",
+  summary_reset_btn: "❌ Отменить",
+  summary_reset_done: "✅ Заявка отменена.",
+
+  summary_sent: "✅ Заявка отправлена. \nМы свяжемся с Вами в ближайшее время.",
+
+  skip_btn: "➡️ Пропустить",
+};

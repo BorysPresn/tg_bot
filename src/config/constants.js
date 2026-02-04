@@ -1,0 +1,27 @@
+const ACTIONS = {
+  OPEN_LANG_MENU: "OPEN_LANG_MENU",
+  START_FLOW: "START_FLOW",
+
+  SKIP_OPTIONAL: "SKIP_OPTIONAL",
+
+  SUMMARY_SEND: "SUMMARY_SEND",
+  SUMMARY_EDIT: "SUMMARY_EDIT",
+  SUMMARY_RESET: "SUMMARY_RESET",
+
+  EDIT_KEEP: "EDIT_KEEP",
+};
+
+const LIMITS = {
+  NAME_MIN: 3,
+  PHONE_MIN: 9,
+  PHONE_MAX: 11,
+  CAR_MIN: 3,
+  ENGINE_MIN: 2,
+  VIN_MIN: 17,
+  PROBLEM_MIN: 5,
+};
+
+const LANGUAGES = ["pl", "en", "ua", "ru"];
+const DEFAULT_LANG = "pl";
+const BOT_URL = "https://t.me/ServisSOMBot";
+module.exports = { ACTIONS, LIMITS, LANGUAGES, DEFAULT_LANG, BOT_URL };
