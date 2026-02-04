@@ -46,5 +46,7 @@ module.exports = {
   summary_sent:
     "✅ Zgłoszenie zostało wysłane.\nSkontaktujemy się z Tobą w najbliższym czasie.",
 
+  session_lost:
+    "Wystąpił problem techniczny i bieżące zgłoszenie zostało przerwane.\nZacznijmy od nowa — zajmie to tylko kilka minut.",
   skip_btn: "➡️ Pomiń",
 };
