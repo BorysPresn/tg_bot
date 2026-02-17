@@ -49,4 +49,5 @@ module.exports = {
   session_lost:
     "Wystąpił problem techniczny i bieżące zgłoszenie zostało przerwane.\nZacznijmy od nowa — zajmie to tylko kilka minut.",
   skip_btn: "➡️ Pomiń",
+  request_sending_error: "❌ Nie udało się wysłać zgłoszenia. Spróbuj ponownie później.",
 };

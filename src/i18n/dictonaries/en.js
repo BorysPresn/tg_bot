@@ -53,4 +53,5 @@ module.exports = {
     "It looks like a technical issue occurred and your current request was interrupted.\nLet’s start again — it will only take a couple of minutes.",
 
   skip_btn: "➡️ Skip",
+  request_sending_error: "❌ Failed to send the request. Please try again later.",
 };

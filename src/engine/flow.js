@@ -1,9 +1,10 @@
 const steps = require("../config/steps");
-const { format } = require("../helpers/helpers");
+const { format, initSession } = require("../helpers/helpers");
 const {
   showSummaryMenu,
   renderOptional,
   renderKeepButton,
+  sendMainMenu,
 } = require("../helpers/menu");
 const { getLocalizedText } = require("../i18n");
 
@@ -68,10 +69,23 @@ function hasActiveFlow(ctx) {
   const i = ctx.session.stepIndex;
   return Number.isInteger(i) && i >= 0 && !!steps[i];
 }
+async function handleSessionLost(ctx) {
+  initSession(ctx)
+  ctx.session.stepIndex = null;
+  ctx.session.form = {};
+  ctx.session.isEditMode = false;
+
+  if (ctx.callbackQuery) {
+    await ctx.answerCbQuery();
+  }
+  await ctx.reply(getLocalizedText(ctx.session.lang, "session_lost"));
+  return sendMainMenu(ctx);
+}
 module.exports = {
   startFlow,
   handleInput,
   showCurrentQuestion,
   goToNextStep,
   hasActiveFlow,
+  handleSessionLost,
 };

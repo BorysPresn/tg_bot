@@ -11,6 +11,7 @@ const {
   showCurrentQuestion,
   goToNextStep,
   hasActiveFlow,
+  handleSessionLost,
 } = require("./engine/flow");
 const { message } = require("telegraf/filters");
 const { getLocalizedText } = require("./i18n");
@@ -35,44 +36,71 @@ bot.action(ACTIONS.START_FLOW, async (ctx) => {
 });
 
 bot.action(ACTIONS.SKIP_OPTIONAL, async (ctx) => {
+  initSession(ctx);
+
+  if (!hasActiveFlow(ctx)) {
+    return handleSessionLost(ctx);
+  }
+
   const step = steps[ctx.session.stepIndex];
-  if (!step || !step.optional) return;
+  if (!step || !step.optional) {
+    await ctx.answerCbQuery();
+    return;
+  }
+
   ctx.session.form[step.key] = "";
-  await goToNextStep(ctx);
+  await ctx.answerCbQuery();
+  return goToNextStep(ctx);
 });
+
 bot.action(ACTIONS.EDIT_KEEP, async (ctx) => {
+  initSession(ctx);
+  if (!hasActiveFlow(ctx)) {
+    return handleSessionLost(ctx);
+  }
   const step = steps[ctx.session.stepIndex];
   if (!step || !ctx.session.isEditMode) return;
   await goToNextStep(ctx);
 });
 
 bot.action(ACTIONS.SUMMARY_RESET, async (ctx) => {
+  initSession(ctx);
+  if (!hasActiveFlow(ctx)) {
+    return handleSessionLost(ctx);
+  }
   await removeInlineKeyboard(ctx);
   ctx.session.form = {};
   ctx.session.stepIndex = null;
   await ctx.answerCbQuery();
   await ctx.reply(getLocalizedText(ctx.session.lang, "summary_reset_done"));
-  sendMainMenu(ctx);
+  return sendMainMenu(ctx);
 });
 
 bot.action(ACTIONS.SUMMARY_SEND, async (ctx) => {
   initSession(ctx);
+  if (!hasActiveFlow(ctx)) {
+    return handleSessionLost(ctx);
+  }
   await removeInlineKeyboard(ctx);
   const summary = createRequestMsg(ctx);
   try {
     await ctx.telegram.sendMessage(TELEGRAM_CHAT_ID, summary);
     await ctx.reply(getLocalizedText(ctx.session.lang, "summary_sent"));
-    sendMainMenu(ctx);
+    return sendMainMenu(ctx);
   } catch (error) {
     console.error("ERROR: ", error);
     await ctx.reply(
       getLocalizedText(ctx.session.lang, "request_sending_error"),
     );
+    return sendMainMenu(ctx);
   }
 });
 
 bot.action(ACTIONS.SUMMARY_EDIT, async (ctx) => {
   initSession(ctx);
+  if (!hasActiveFlow(ctx)) {
+    return handleSessionLost(ctx);
+  }
   ctx.session.isEditMode = true;
   await removeInlineKeyboard(ctx);
   ctx.session.stepIndex = 0;
@@ -114,14 +142,11 @@ bot.start((ctx) => {
   return sendMainMenu(ctx);
 });
 
-bot.on(message("text"), (ctx) => {
+bot.on(message("text"), async (ctx) => {
   initSession(ctx);
+
   if (!hasActiveFlow(ctx)) {
-    ctx.session.stepIndex = null;
-    ctx.session.form = {};
-    ctx.session.isEditMode = false;
-    ctx.reply(getLocalizedText(ctx.session.lang, "session_lost"));
-    return sendMainMenu(ctx);
+    return handleSessionLost(ctx);
   }
 
   return handleInput(ctx, ctx.message.text);
