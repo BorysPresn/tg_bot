@@ -17,7 +17,6 @@ const { getLocalizedText } = require("./i18n");
 const { ACTIONS, BOT_URL } = require("./config/constants");
 const { createRequestMsg } = require("./helpers/textCreators");
 const { TELEGRAM_CHAT_ID } = require("./config/admin");
-const { sendEmail } = require("./services/emailService");
 const steps = require("./config/steps");
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
