@@ -19,7 +19,7 @@ module.exports = {
   phone_error: "Wpisz poprawny numer telefonu (co najmniej {min} cyfr).",
   car_name_error: "Marka i model auta muszą zawierać co najmniej {min} znaków.",
   engine_error: "Opis silnika musi zawierać co najmniej {min} znaków.",
-  vin_error: "VIN musi zawierać co najmniej {min} znaków.",
+  vin_error: "VIN powinien mieć {min} znaków i nie może zawierać liter I, O ani Q.",
   problem_error: "Opis musi zawierać co najmniej {min} znaków.",
 
   send_request_btn: "📄 Wyślij zgłoszenie lub zapytanie",

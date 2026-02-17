@@ -22,7 +22,8 @@ module.exports = {
   phone_error: "Please enter a valid phone number (at least {min} digits).",
   car_name_error: "Car brand and model must contain at least {min} characters.",
   engine_error: "Engine description must contain at least {min} characters.",
-  vin_error: "VIN must contain at least {min} characters.",
+  vin_error:
+    "VIN should be {min} characters long and must not contain the letters I, O, or Q.",
   problem_error: "Description must contain at least {min} characters.",
 
   send_request_btn: "📄 Send request",
