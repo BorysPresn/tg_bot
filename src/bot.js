@@ -62,10 +62,6 @@ bot.action(ACTIONS.SUMMARY_SEND, async (ctx) => {
   const summary = createRequestMsg(ctx);
   try {
     await ctx.telegram.sendMessage(TELEGRAM_CHAT_ID, summary);
-    await sendEmail({
-      subject: "Bot Serwis S.O.M.",
-      text: summary,
-    });
     await ctx.reply(getLocalizedText(ctx.session.lang, "summary_sent"));
     sendMainMenu(ctx);
   } catch (error) {
