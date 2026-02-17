@@ -23,5 +23,5 @@ const LIMITS = {
 
 const LANGUAGES = ["pl", "en", "ua", "ru"];
 const DEFAULT_LANG = "pl";
-const BOT_URL = "https://t.me/ServisSOMBot";
+const BOT_URL = "https://t.me/SerwisSOMBot";
 module.exports = { ACTIONS, LIMITS, LANGUAGES, DEFAULT_LANG, BOT_URL };
