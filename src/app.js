@@ -2,10 +2,13 @@ const bot = require("./bot");
 process.on("unhandledRejection", (reason) => {
   console.error("unhandledRejection: ", reason);
 });
+
 process.on("uncaughtException", (err) => {
   console.error("uncaughtException: ", err);
 });
+
 bot.launch();
+
 console.log("Bot is running...");
 
 // корректная остановка

@@ -39,7 +39,7 @@ module.exports = {
   summary_car: "🚗 Авто",
   summary_engine: "⚙️ Двигун",
   summary_vin: "🔢 VIN",
-  summary_problem: "🛠 Опис",
+  summary_problem: "🛠 Опис проблеми або послуги",
 
   summary_send_btn: "✅ Відправити",
   summary_edit_btn: "✏️ Редагувати",

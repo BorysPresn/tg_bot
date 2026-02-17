@@ -37,12 +37,12 @@ module.exports = {
   summary_car: "🚗 Auto",
   summary_engine: "⚙️ Silnik",
   summary_vin: "🔢 VIN",
-  summary_problem: "🛠 Opis problemu",
+  summary_problem: "🛠 Opis problemu albo usługi",
 
   summary_send_btn: "✅ Wyślij",
   summary_edit_btn: "✏️ Edytuj",
   summary_reset_btn: "❌ Anuluj",
-  summary_reset_done: "✅ Zgłoszenie zostałe anulowane",
+  summary_reset_done: "✅ Zgłoszenie zostało anulowane.",
   summary_sent:
     "✅ Zgłoszenie zostało wysłane.\nSkontaktujemy się z Tobą w najbliższym czasie.",
 

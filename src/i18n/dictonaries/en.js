@@ -41,7 +41,7 @@ module.exports = {
   summary_car: "🚗 Car",
   summary_engine: "⚙️ Engine",
   summary_vin: "🔢 VIN",
-  summary_problem: "🛠 Problem description",
+  summary_problem: "🛠 Problem or service description",
 
   summary_send_btn: "✅ Send",
   summary_edit_btn: "✏️ Edit",
