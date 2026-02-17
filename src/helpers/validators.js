@@ -20,10 +20,9 @@ function normalizeVin(text) {
   return (text || "").toUpperCase();
 }
 
-const VIN_REGEX = new RegExp(`^[A-HJ-NPR-Z0-9]{${LIMITS.VIN_LENGTH}}$`);
+const VIN_REGEX = new RegExp(`^[A-HJ-NPR-Z0-9]{${LIMITS.VIN_MIN}}$`);
 function validateVin(text) {
   if (!text) return true;
-
   const vin = text.trim().toUpperCase();
 
   return VIN_REGEX.test(vin);

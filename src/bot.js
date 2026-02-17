@@ -78,6 +78,7 @@ bot.action(ACTIONS.SUMMARY_RESET, async (ctx) => {
 
 bot.action(ACTIONS.SUMMARY_SEND, async (ctx) => {
   initSession(ctx);
+
   if (!hasActiveFlow(ctx)) {
     return handleSessionLost(ctx);
   }

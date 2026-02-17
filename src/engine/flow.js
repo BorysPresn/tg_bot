@@ -67,10 +67,15 @@ function handleInput(ctx, text) {
 }
 function hasActiveFlow(ctx) {
   const i = ctx.session.stepIndex;
-  return Number.isInteger(i) && i >= 0 && !!steps[i];
+
+  if (Number.isInteger(i) && i >= 0 && !!steps[i]) return true;
+  //if showing summary
+  if (i === steps.length) return true;
+
+  return false;
 }
 async function handleSessionLost(ctx) {
-  initSession(ctx)
+  initSession(ctx);
   ctx.session.stepIndex = null;
   ctx.session.form = {};
   ctx.session.isEditMode = false;
