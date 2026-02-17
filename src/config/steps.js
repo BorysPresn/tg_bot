@@ -4,6 +4,7 @@ const {
   minLength,
   normalizePhone,
   normalizeVin,
+  validateVin,
 } = require("../helpers/validators");
 const { LIMITS } = require("./constants");
 
@@ -54,7 +55,7 @@ module.exports = [
     },
     optional: true,
     normalize: normalizeVin,
-    validate: minLength(LIMITS.VIN_MIN),
+    validate: validateVin,
   },
   {
     key: "problem",

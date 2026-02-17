@@ -37,7 +37,7 @@ bot.action(ACTIONS.START_FLOW, async (ctx) => {
 bot.action(ACTIONS.SKIP_OPTIONAL, async (ctx) => {
   const step = steps[ctx.session.stepIndex];
   if (!step || !step.optional) return;
-  ctx.session.form[step.key] = "-";
+  ctx.session.form[step.key] = "";
   await goToNextStep(ctx);
 });
 bot.action(ACTIONS.EDIT_KEEP, async (ctx) => {
@@ -120,7 +120,6 @@ bot.on(message("text"), (ctx) => {
     ctx.session.stepIndex = null;
     ctx.session.form = {};
     ctx.session.isEditMode = false;
-
     ctx.reply(getLocalizedText(ctx.session.lang, "session_lost"));
     return sendMainMenu(ctx);
   }

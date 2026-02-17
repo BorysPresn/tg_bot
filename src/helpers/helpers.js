@@ -2,6 +2,7 @@ const { LANGUAGES, DEFAULT_LANG } = require("../config/constants");
 
 function initSession(ctx) {
   if (!ctx.session) ctx.session = {};
+  if (!ctx.session.lang) ctx.session.lang = detectLang(ctx);
   if (!Number.isInteger(ctx.session.stepIndex)) ctx.session.stepIndex = null;
   if (!ctx.session.form) ctx.session.form = {};
 }
