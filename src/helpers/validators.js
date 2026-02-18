@@ -14,7 +14,8 @@ function onlyLetters(text) {
 }
 
 function normalizePhone(text) {
-  return (text || "").replace(/\D/g, "");
+  const phone = (text || "").replace(/\D/g, "");
+  return phone.replace(/\B(?=(\d{3})+(?!\d))/g, " ");;
 }
 function normalizeVin(text) {
   return (text || "").toUpperCase();
