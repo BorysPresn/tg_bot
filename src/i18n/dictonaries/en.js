@@ -48,7 +48,7 @@ module.exports = {
   summary_edit_btn: "✏️ Edit",
   summary_reset_btn: "❌ Cancel",
   summary_reset_done: "✅ Request canceled.",
-  summary_sent: "✅ Your request has been sent.\nWe will contact you shortly.",
+  summary_sent: "✅ Your request has been sent.\nWe will contact you during business hours.",
   session_lost:
     "It looks like a technical issue occurred and your current request was interrupted.\nLet’s start again — it will only take a couple of minutes.",
 

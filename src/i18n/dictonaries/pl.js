@@ -44,7 +44,7 @@ module.exports = {
   summary_reset_btn: "❌ Anuluj",
   summary_reset_done: "✅ Zgłoszenie zostało anulowane.",
   summary_sent:
-    "✅ Zgłoszenie zostało wysłane.\nSkontaktujemy się z Tobą w najbliższym czasie.",
+    "✅ Zgłoszenie zostało wysłane.\nSkontaktujemy się z Tobą w godzinach pracy serwisu.",
 
   session_lost:
     "Wystąpił problem techniczny i bieżące zgłoszenie zostało przerwane.\nZacznijmy od nowa — zajmie to tylko kilka minut.",
