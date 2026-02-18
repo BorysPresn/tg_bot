@@ -52,8 +52,7 @@ function handleInput(ctx, text) {
   if (!step) return;
 
   const raw = text || "";
-  const value = step.normalize ? step.normalize(raw) : raw;
-  const isValid = step.validate ? step.validate(value) : true;
+  const isValid = step.validate ? step.validate(raw) : true;
   if (!isValid) {
     const msg = format(
       getLocalizedText(ctx.session.lang, step.errorKey),
@@ -61,6 +60,7 @@ function handleInput(ctx, text) {
     );
     return ctx.reply(msg);
   }
+  const value = step.normalize ? step.normalize(raw) : raw;
 
   ctx.session.form[step.key] = value;
   goToNextStep(ctx);

@@ -5,6 +5,7 @@ const {
   normalizePhone,
   normalizeVin,
   validateVin,
+  validatePhone,
 } = require("../helpers/validators");
 const { LIMITS } = require("./constants");
 
@@ -23,10 +24,10 @@ module.exports = [
     questionKey: "phone_question",
     errorKey: "phone_error",
     meta: {
-      min: LIMITS.PHONE_MIN
+      length: LIMITS.PHONE_LENGTH
     },
     normalize: normalizePhone,
-    validate: minLength(LIMITS.PHONE_MIN),
+    validate: validatePhone(LIMITS.PHONE_LENGTH),
   },
   {
     key: "car_name",

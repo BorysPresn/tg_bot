@@ -13,8 +13,7 @@ const ACTIONS = {
 
 const LIMITS = {
   NAME_MIN: 3,
-  PHONE_MIN: 9,
-  PHONE_MAX: 11,
+  PHONE_LENGTH: 9,
   CAR_MIN: 3,
   ENGINE_MIN: 2,
   VIN_MIN: 17,

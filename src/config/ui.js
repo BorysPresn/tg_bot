@@ -22,8 +22,8 @@ const changeLanguage = {
   buttons: [
     {
       type: "inline",
-      textKey: "lang_ua",
-      value: "ua",
+      textKey: "lang_uk",
+      value: "uk",
     },
     {
       type: "inline",

@@ -8,15 +8,21 @@ function minLength(min) {
   return (text) => (text || "").trim().length >= min;
 }
 
+function validatePhone(requiredLength) {
+  const re = new RegExp(`^\\d{${requiredLength}}$`);
+  return (text) => re.test((text || "").trim());
+}
+
 function onlyLetters(text) {
   const v = (text || "").trim();
   return /^[\p{L}\s'`]+$/u.test(v);
 }
 
 function normalizePhone(text) {
-  const phone = (text || "").replace(/\D/g, "");
-  return phone.replace(/\B(?=(\d{3})+(?!\d))/g, " ");;
+  const digits = (text || "").trim();
+  return digits.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 }
+
 function normalizeVin(text) {
   return (text || "").toUpperCase();
 }
@@ -31,6 +37,7 @@ function validateVin(text) {
 module.exports = {
   all,
   minLength,
+  validatePhone,
   onlyLetters,
   normalizePhone,
   normalizeVin,
