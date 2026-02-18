@@ -9,17 +9,17 @@ module.exports = {
     "Hi! 👋 I am the Serwis S.O.M. bot.\nI will help you send a service request or ask for a repair cost estimate.",
 
   name_question: "Enter your name (at least {min} letters):",
-  phone_question: "Enter your phone number (at least {min} digits):",
+  phone_question: "Enter your phone number:\n{length} digits, no spaces (e.g. 500600700)",
   car_name_question:
     "Enter car brand and model (for example, Volkswagen Golf):",
   engine_question: "Enter engine type (for example, 1.4 TSI, 2.0 TDI):",
   vin_question: "Enter VIN number (optional):",
   problem_question:
-    "Describe the problem or service needed (at least {min} characters):",
+    "Describe the problem or service needed ({length} characters):",
 
   name_error:
     "Name must contain at least {min} letters and must not include numbers.",
-  phone_error: "Please enter a valid phone number (at least {min} digits).",
+  phone_error: "Phone number must be exactly {length} digits (no spaces).",
   car_name_error: "Car brand and model must contain at least {min} characters.",
   engine_error: "Engine description must contain at least {min} characters.",
   vin_error:
@@ -32,7 +32,7 @@ module.exports = {
   choose_lang: "Choose language:",
   lang_pl: "🇵🇱 Polski",
   lang_en: "🇬🇧 English",
-  lang_ua: "🇺🇦 Українська",
+  lang_uk: "🇺🇦 Українська",
   lang_ru: "🇷🇺 Русский",
   lang_saved: "✅ Language changed.",
 

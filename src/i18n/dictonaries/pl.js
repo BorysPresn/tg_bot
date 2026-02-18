@@ -8,7 +8,7 @@ module.exports = {
     "Cześć! 👋 Jestem botem Serwis S.O.M.\nPomogę wysłać zgłoszenie lub zapytanie o wycenę naprawy.",
 
   name_question: "Wpisz swoje imię (co najmniej {min} litery):",
-  phone_question: "Wpisz numer telefonu (co najmniej {min} cyfr):",
+  phone_question: "Wpisz numer telefonu:\n{length} cyfr bez spacji (np. 500600700):",
   car_name_question: "Wpisz markę i model auta (np. Volkswagen Golf):",
   engine_question: "Wpisz typ silnika (np. 1.4 TSI, 2.0 TDI):",
   vin_question: "Wpisz numer VIN (opcjonalnie):",
@@ -16,7 +16,7 @@ module.exports = {
 
   name_error:
     "Imię musi zawierać co najmniej {min} litery i nie może zawierać cyfr.",
-  phone_error: "Wpisz poprawny numer telefonu (co najmniej {min} cyfr).",
+  phone_error: "Numer telefonu musi zawierać dokładnie {length} cyfr (bez spacji).",
   car_name_error: "Marka i model auta muszą zawierać co najmniej {min} znaków.",
   engine_error: "Opis silnika musi zawierać co najmniej {min} znaków.",
   vin_error: "VIN powinien mieć {min} znaków i nie może zawierać liter I, O ani Q.",
@@ -27,7 +27,7 @@ module.exports = {
   choose_lang: "Wybierz język:",
   lang_pl: "🇵🇱 Polski",
   lang_en: "🇬🇧 English",
-  lang_ua: "🇺🇦 Українська",
+  lang_uk: "🇺🇦 Українська",
   lang_ru: "🇷🇺 Русский",
   lang_saved: "✅ Język został zmieniony.",
 
