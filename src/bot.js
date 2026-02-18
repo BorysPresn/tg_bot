@@ -108,7 +108,7 @@ bot.action(ACTIONS.SUMMARY_EDIT, async (ctx) => {
   return showCurrentQuestion(ctx);
 });
 
-bot.action(/^LANG_(pl|en|ua|ru)$/, async (ctx) => {
+bot.action(/^LANG_(pl|en|uk|ru)$/, async (ctx) => {
   await removeInlineKeyboard(ctx);
   initSession(ctx);
 

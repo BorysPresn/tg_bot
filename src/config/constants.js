@@ -21,7 +21,7 @@ const LIMITS = {
   PROBLEM_MIN: 5,
 };
 
-const LANGUAGES = ["pl", "en", "ua", "ru"];
+const LANGUAGES = ["pl", "en", "uk", "ru"];
 const DEFAULT_LANG = "pl";
 const BOT_URL = "https://t.me/SerwisSOMBot";
 module.exports = { ACTIONS, LIMITS, LANGUAGES, DEFAULT_LANG, BOT_URL };
