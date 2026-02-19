@@ -17,9 +17,8 @@ const { message } = require("telegraf/filters");
 const { getLocalizedText } = require("./i18n");
 const { ACTIONS, BOT_URL } = require("./config/constants");
 const { createRequestMsg } = require("./helpers/textCreators");
-const { TELEGRAM_CHAT_ID } = require("./config/admin");
 const steps = require("./config/steps");
-
+const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.use(session());
 
@@ -85,7 +84,7 @@ bot.action(ACTIONS.SUMMARY_SEND, async (ctx) => {
   await removeInlineKeyboard(ctx);
   const summary = createRequestMsg(ctx);
   try {
-    await ctx.telegram.sendMessage(TELEGRAM_CHAT_ID, summary);
+    await ctx.telegram.sendMessage(CHAT_ID, summary);
     await ctx.reply(getLocalizedText(ctx.session.lang, "summary_sent"));
     return sendMainMenu(ctx);
   } catch (error) {

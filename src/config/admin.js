@@ -1,3 +1,0 @@
-TELEGRAM_CHAT_ID = "-5277765480";
-
-module.exports = { TELEGRAM_CHAT_ID };
