@@ -47,7 +47,7 @@ async function goToNextStep(ctx) {
   }
   await showCurrentQuestion(ctx);
 }
-function handleInput(ctx, text) {
+async function handleInput(ctx, text) {
   const step = steps[ctx.session.stepIndex];
   if (!step) return;
 
@@ -63,7 +63,7 @@ function handleInput(ctx, text) {
   const value = step.normalize ? step.normalize(raw) : raw;
 
   ctx.session.form[step.key] = value;
-  goToNextStep(ctx);
+  await goToNextStep(ctx);
 }
 function hasActiveFlow(ctx) {
   const i = ctx.session.stepIndex;
