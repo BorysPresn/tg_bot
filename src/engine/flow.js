@@ -68,11 +68,15 @@ function handleInput(ctx, text, options = {}) {
 
   const raw = text || "";
   let preparedRaw = raw;
-
+  console.log("Raw input:", raw);
   if (step.key === "phone" && options.fromContact) {
-    preparedRaw = raw.replace(/^\+?48/, "");
+    let digits = raw.replace(/\D/g, "");
+    if (digits.length > 9 && digits.startsWith("48")) {
+      digits = digits.slice(2);
+    }
+    preparedRaw = digits;
   }
-
+  console.log("Prepared input:", preparedRaw);
   const isValid = step.validate ? step.validate(preparedRaw) : true;
 
   if (!isValid) {
@@ -82,7 +86,7 @@ function handleInput(ctx, text, options = {}) {
     );
     return ctx.reply(msg);
   }
-  let value = step.normalize ? step.normalize(raw) : raw;
+  let value = step.normalize ? step.normalize(preparedRaw) : raw;
 
   if (step.key === "phone" && options.fromContact) {
     value = `+48 ${value}`;
