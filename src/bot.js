@@ -152,6 +152,25 @@ bot.on(message("text"), async (ctx) => {
   return handleInput(ctx, ctx.message.text);
 });
 
+bot.on(message("contact"), async (ctx) => {
+  initSession(ctx);
+
+  if (!hasActiveFlow(ctx)) {
+    return handleSessionLost(ctx);
+  }
+
+  const step = steps[ctx.session.stepIndex];
+  if (!step) return;
+
+  if (step.key !== "phone") return;
+
+  await ctx.reply(
+    getLocalizedText(ctx.session.lang, "contact_received"),
+    Markup.removeKeyboard(),
+  );
+  return handleInput(ctx, ctx.message.contact.phone_number, { fromContact: true });
+}
+);
 bot.catch((err) => {
   console.error("BOT ERROR: ", err);
 });

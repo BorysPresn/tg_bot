@@ -9,13 +9,13 @@ module.exports = {
     "Hi! 👋 I am the Serwis S.O.M. bot.\nI will help you send a service request or ask for a repair cost estimate.",
 
   name_question: "Enter your name (at least {min} letters):",
-  phone_question: "Enter your phone number:\n{length} digits, no spaces (e.g. 500600700)",
+  phone_question: "Enter your phone number:\n{length} digits, no spaces (e.g. 500600700)\n\nOr use the button below to share your contact:",
   car_name_question:
     "Enter car brand and model (for example, Volkswagen Golf):",
   engine_question: "Enter engine type (for example, 1.4 TSI, 2.0 TDI):",
   vin_question: "Enter VIN number (optional):",
   problem_question:
-    "Describe the problem or service needed ({length} characters):",
+    "Describe the problem or service needed ({min} characters):",
 
   name_error:
     "Name must contain at least {min} letters and must not include numbers.",
@@ -54,4 +54,6 @@ module.exports = {
 
   skip_btn: "➡️ Skip",
   request_sending_error: "❌ Failed to send the request. Please try again later.",
+  send_contact_btn: "📱 Share contact",
+  contact_received: "✅ Contact received.",
 };

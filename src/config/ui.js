@@ -83,5 +83,7 @@ const keep = {
     },
   ],
 };
-
-module.exports = { main, changeLanguage, summary, optional, keep };
+const contact = {
+  textKey: "send_contact_btn",
+}
+module.exports = { main, changeLanguage, summary, optional, keep, contact };
