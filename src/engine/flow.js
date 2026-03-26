@@ -1,3 +1,4 @@
+const { Markup } = require("telegraf");
 const steps = require("../config/steps");
 const { format, initSession } = require("../helpers/helpers");
 const {
@@ -5,6 +6,7 @@ const {
   renderOptional,
   renderKeepButton,
   sendMainMenu,
+  renderContactButton,
 } = require("../helpers/menu");
 const { getLocalizedText } = require("../i18n");
 
@@ -22,9 +24,19 @@ function showCurrentQuestion(ctx) {
     getLocalizedText(ctx.session.lang, step.questionKey),
     step.meta,
   );
+
+  if (step.key === "phone") {
+    const contactButton = renderContactButton(ctx);
+    return ctx.reply(
+      msg,
+      Markup.keyboard([[contactButton]]).oneTime().resize(),
+    );
+  }
+
   if (step.optional && !ctx.session.isEditMode) {
     return ctx.reply(msg, renderOptional(ctx));
   }
+
   if (ctx.session.isEditMode) {
     const value = ctx.session.form[step.key];
     const text = msg + `\n${value}`;
@@ -32,27 +44,37 @@ function showCurrentQuestion(ctx) {
   }
   ctx.reply(msg);
 }
+
 async function goToNextStep(ctx) {
   ctx.session.stepIndex++;
   const step = steps[ctx.session.stepIndex];
-
-  if (ctx.updateType === "callback_query") {
-    await ctx.answerCbQuery().catch(() => {});
-    await ctx.editMessageReplyMarkup(undefined).catch(() => {});
-  }
 
   if (!step) {
     ctx.session.isEditMode = false;
     return showSummaryMenu(ctx);
   }
+
+  if (ctx.updateType === "callback_query") {
+    await ctx.answerCbQuery().catch(() => { });
+    await ctx.editMessageReplyMarkup(undefined).catch(() => { });
+  }
+
   await showCurrentQuestion(ctx);
 }
-function handleInput(ctx, text) {
+
+function handleInput(ctx, text, options = {}) {
   const step = steps[ctx.session.stepIndex];
   if (!step) return;
 
   const raw = text || "";
-  const isValid = step.validate ? step.validate(raw) : true;
+  let preparedRaw = raw;
+
+  if (step.key === "phone" && options.fromContact) {
+    preparedRaw = raw.replace(/^\+?48/, "");
+  }
+
+  const isValid = step.validate ? step.validate(preparedRaw) : true;
+
   if (!isValid) {
     const msg = format(
       getLocalizedText(ctx.session.lang, step.errorKey),
@@ -60,7 +82,11 @@ function handleInput(ctx, text) {
     );
     return ctx.reply(msg);
   }
-  const value = step.normalize ? step.normalize(raw) : raw;
+  let value = step.normalize ? step.normalize(raw) : raw;
+
+  if (step.key === "phone" && options.fromContact) {
+    value = `+48 ${value}`;
+  }
 
   ctx.session.form[step.key] = value;
   goToNextStep(ctx);
