@@ -68,7 +68,7 @@ function handleInput(ctx, text, options = {}) {
 
   const raw = text || "";
   let preparedRaw = raw;
-  console.log("Raw input:", raw);
+
   if (step.key === "phone" && options.fromContact) {
     let digits = raw.replace(/\D/g, "");
     if (digits.length > 9 && digits.startsWith("48")) {
@@ -76,7 +76,6 @@ function handleInput(ctx, text, options = {}) {
     }
     preparedRaw = digits;
   }
-  console.log("Prepared input:", preparedRaw);
   const isValid = step.validate ? step.validate(preparedRaw) : true;
 
   if (!isValid) {
