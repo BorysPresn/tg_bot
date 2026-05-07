@@ -18,6 +18,7 @@ const { getLocalizedText } = require("./i18n");
 const { ACTIONS, BOT_URL } = require("./config/constants");
 const { createRequestMsg } = require("./helpers/textCreators");
 const steps = require("./config/steps");
+const { normalizePhone } = require("./helpers/validators");
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.use(session());
@@ -83,8 +84,26 @@ bot.action(ACTIONS.SUMMARY_SEND, async (ctx) => {
   }
   await removeInlineKeyboard(ctx);
   const summary = createRequestMsg(ctx);
+  const phoneDigits = (ctx.session?.form?.phone || "").replace(/\D/g, "");
+
+  const extraOptions = {
+    parse_mode: "HTML",
+    disable_web_page_preview: true,
+  };
+
+  if (phoneDigits.startsWith("48") && phoneDigits.length >= 9) {
+    extraOptions.reply_markup = {
+      inline_keyboard: [[
+        {
+          text: getLocalizedText(ctx.session.lang, "summary_call_button"),
+          url: `tel:+${phoneDigits}`,
+        },
+      ]],
+    };
+  }
+
   try {
-    await ctx.telegram.sendMessage(CHAT_ID, summary);
+    await ctx.telegram.sendMessage(CHAT_ID, summary, extraOptions);
     await ctx.reply(getLocalizedText(ctx.session.lang, "summary_sent"));
     return sendMainMenu(ctx);
   } catch (error) {
@@ -152,6 +171,21 @@ bot.on(message("text"), async (ctx) => {
   return handleInput(ctx, ctx.message.text);
 });
 
+bot.on(message("contact"), async (ctx) => {
+  initSession(ctx);
+  if(!hasActiveFlow(ctx)) return handleSessionLost(ctx);
+
+  const step = steps[ctx.session.stepIndex];
+  if(!step || step.key !== "phone") return;
+
+  const contact = ctx.message.contact;
+  if(!contact || !contact.phone_number) {
+    return ctx.reply(getLocalizedText(ctx.session.lang, "phone_error"))
+  }
+
+  ctx.session.form.phone = normalizePhone(contact.phone_number);
+  await goToNextStep(ctx);
+})
 bot.catch((err) => {
   console.error("BOT ERROR: ", err);
 });

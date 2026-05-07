@@ -1,3 +1,4 @@
+const { Markup } = require("telegraf");
 const steps = require("../config/steps");
 const { format, initSession } = require("../helpers/helpers");
 const {
@@ -22,6 +23,14 @@ function showCurrentQuestion(ctx) {
     getLocalizedText(ctx.session.lang, step.questionKey),
     step.meta,
   );
+
+  if(step.key === "phone") {
+    const keyboard = Markup.keyboard([
+      Markup.button.contactRequest(getLocalizedText(ctx.session.lang, "send_contact_btn"))  // добавь ключ в i18n
+    ]).oneTime().resize();
+    return ctx.reply(msg, keyboard);
+  }
+
   if (step.optional && !ctx.session.isEditMode) {
     return ctx.reply(msg, renderOptional(ctx));
   }
