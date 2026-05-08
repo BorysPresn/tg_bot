@@ -31,6 +31,7 @@ const contactFormLimiter = rateLimit({
     ok: false,
     message: "Too many requests. Please try again later.",
   },
+
 });
 
 app.use("/api/contact", contactFormLimiter, contactRoute(bot));
