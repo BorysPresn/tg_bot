@@ -22,6 +22,53 @@ const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.use(session());
 
+function normalizeContactPhone(phone) {
+  const digits = (phone || "").replace(/\D/g, "");
+
+  if (digits.length === 9) return `+48${digits}`;
+  if (digits.startsWith("48") && digits.length === 11) return `+${digits}`;
+  if (digits.startsWith("00") && digits.length > 2) return `+${digits.slice(2)}`;
+
+  return digits ? `+${digits}` : null;
+}
+
+function escapeVCardValue(value) {
+  return String(value || "")
+    .replace(/\\/g, "\\\\")
+    .replace(/\n/g, "\\n")
+    .replace(/,/g, "\\,")
+    .replace(/;/g, "\\;");
+}
+
+function createClientContact(ctx) {
+  const form = ctx.session?.form || {};
+  const phoneNumber = normalizeContactPhone(form.phone);
+  if (!phoneNumber) return null;
+
+  const firstName = (form.name || ctx.from?.first_name || "Client").trim();
+  const username = ctx.from?.username ? `@${ctx.from.username}` : "-";
+  const note = [
+    `Telegram ID: ${ctx.from?.id || "-"}`,
+    `Username: ${username}`,
+    `Language: ${ctx.from?.language_code || "-"}`,
+  ].join("\\n");
+
+  return {
+    phoneNumber,
+    firstName,
+    extra: {
+      vcard: [
+        "BEGIN:VCARD",
+        "VERSION:3.0",
+        `FN:${escapeVCardValue(firstName)}`,
+        `TEL;TYPE=CELL:${escapeVCardValue(phoneNumber)}`,
+        `NOTE:${escapeVCardValue(note)}`,
+        "END:VCARD",
+      ].join("\n"),
+    },
+  };
+}
+
 bot.action(ACTIONS.OPEN_LANG_MENU, async (ctx) => {
   await removeInlineKeyboard(ctx);
   initSession(ctx);
@@ -83,8 +130,29 @@ bot.action(ACTIONS.SUMMARY_SEND, async (ctx) => {
   }
   await removeInlineKeyboard(ctx);
   const summary = createRequestMsg(ctx);
+
+  const extraOptions = {
+    parse_mode: "HTML",
+    disable_web_page_preview: true,
+  };
+
   try {
-    await ctx.telegram.sendMessage(CHAT_ID, summary);
+    await ctx.telegram.sendMessage(CHAT_ID, summary, extraOptions);
+    const contact = createClientContact(ctx);
+
+    if (contact) {
+      await ctx.telegram
+        .sendContact(
+          CHAT_ID,
+          contact.phoneNumber,
+          contact.firstName,
+          contact.extra,
+        )
+        .catch((error) => {
+          console.error("CONTACT SENDING ERROR: ", error);
+        });
+    }
+
     await ctx.reply(getLocalizedText(ctx.session.lang, "summary_sent"));
     return sendMainMenu(ctx);
   } catch (error) {
@@ -168,7 +236,10 @@ bot.on(message("contact"), async (ctx) => {
     getLocalizedText(ctx.session.lang, "contact_received"),
     Markup.removeKeyboard(),
   );
-  return handleInput(ctx, ctx.message.contact.phone_number, { fromContact: true });
+  return handleInput(ctx, ctx.message.contact.phone_number, {
+    fromContact: true,
+    keyboardRemoved: true,
+  });
 }
 );
 bot.catch((err) => {
