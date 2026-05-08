@@ -17,13 +17,19 @@ function startFlow(ctx) {
   showCurrentQuestion(ctx);
 }
 
-function showCurrentQuestion(ctx) {
+function showCurrentQuestion(ctx, replyOptions) {
   const step = steps[ctx.session.stepIndex];
   if (!step) return;
   const msg = format(
     getLocalizedText(ctx.session.lang, step.questionKey),
     step.meta,
   );
+
+  if (ctx.session.isEditMode) {
+    const value = ctx.session.form[step.key];
+    const text = msg + `\n${value}`;
+    return ctx.reply(text, renderKeepButton(ctx));
+  }
 
   if (step.key === "phone") {
     const contactButton = renderContactButton(ctx);
@@ -36,16 +42,10 @@ function showCurrentQuestion(ctx) {
   if (step.optional && !ctx.session.isEditMode) {
     return ctx.reply(msg, renderOptional(ctx));
   }
-
-  if (ctx.session.isEditMode) {
-    const value = ctx.session.form[step.key];
-    const text = msg + `\n${value}`;
-    return ctx.reply(text, renderKeepButton(ctx));
-  }
-  ctx.reply(msg);
+  return ctx.reply(msg, replyOptions);
 }
 
-async function goToNextStep(ctx) {
+async function goToNextStep(ctx, options = {}) {
   ctx.session.stepIndex++;
   const step = steps[ctx.session.stepIndex];
 
@@ -59,10 +59,11 @@ async function goToNextStep(ctx) {
     await ctx.editMessageReplyMarkup(undefined).catch(() => { });
   }
 
-  await showCurrentQuestion(ctx);
+  const replyOptions = options.removeKeyboard ? Markup.removeKeyboard() : undefined;
+  await showCurrentQuestion(ctx, replyOptions);
 }
 
-function handleInput(ctx, text, options = {}) {
+async function handleInput(ctx, text, options = {}) {
   const step = steps[ctx.session.stepIndex];
   if (!step) return;
 
@@ -92,7 +93,7 @@ function handleInput(ctx, text, options = {}) {
   }
 
   ctx.session.form[step.key] = value;
-  goToNextStep(ctx);
+  await goToNextStep(ctx, { removeKeyboard: step.key === "phone" });
 }
 function hasActiveFlow(ctx) {
   const i = ctx.session.stepIndex;

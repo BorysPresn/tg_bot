@@ -54,5 +54,4 @@ module.exports = {
   request_sending_error: "❌ Не удалось отправить заявку. Попробуйте позже.",
   send_contact_btn: "📱 Поделиться контактом",
   contact_received: "✅ Контакт получен.",
-  summary_call_button: "📞 Позвонить клиенту",
 };

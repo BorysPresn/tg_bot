@@ -52,5 +52,4 @@ module.exports = {
   request_sending_error: "❌ Nie udało się wysłać zgłoszenia. Spróbuj ponownie później.",
   send_contact_btn: "📱 Udostępnij kontakt",
   contact_received: "✅ Kontakt został otrzymany.",
-  summary_call_button: "📞 Zadzwoń do klienta",
 };

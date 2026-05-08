@@ -35,24 +35,19 @@ function createSummaryText(ctx) {
 
 function createRequestMsg(ctx) {
   const summaryText = createSummaryText(ctx);
-  const form = ctx.session.form;
-  const phoneDigits = (form.phone || "").replace(/\D/g, "");
-
-  let phoneCallPart = "";
-  if (phoneDigits.startsWith("48") && phoneDigits.length >= 9) {
-    phoneCallPart = `\n\n📞 <a href="tel:+${phoneDigits}">${escapeHtml(
-      form.phone,
-    )}</a>`;
-  }
 
   const u = ctx.from;
+  const senderName = `${u.first_name || "-"} ${u.last_name || ""}`.trim();
+  const senderLink = `<a href="tg://user?id=${u.id}">${escapeHtml(senderName)}</a>`;
+
   return [
     `=== НОВАЯ ЗАЯВКА ===`,
-    summaryText + phoneCallPart,
-    "=== TELEGRAM INFO ===",
+    summaryText,
+    "\n=== TELEGRAM INFO ===",
     `Client ID: ${u.id}`,
     `Username: ${u.username || "-"}`,
-    `Name: ${u.first_name || "-"} ${u.last_name || "-"}`,
+    `Contact: ${senderLink}`,
+    `Name: ${escapeHtml(senderName || "-")}`,
     `Language: ${u.language_code || "-"}`,
   ].join("\n");
 }

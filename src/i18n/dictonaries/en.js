@@ -56,5 +56,4 @@ module.exports = {
   request_sending_error: "❌ Failed to send the request. Please try again later.",
   send_contact_btn: "📱 Share contact",
   contact_received: "✅ Contact received.",
-  summary_call_button: "📞 Call client",
 };
