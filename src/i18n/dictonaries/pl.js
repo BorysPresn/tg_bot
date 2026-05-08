@@ -8,7 +8,7 @@ module.exports = {
     "Cześć! 👋 Jestem botem Serwis S.O.M.\nPomogę wysłać zgłoszenie lub zapytanie o wycenę naprawy.",
 
   name_question: "Wpisz swoje imię (co najmniej {min} litery):",
-  phone_question: "Wpisz numer telefonu:\n{length} cyfr bez spacji (np. 500600700):\n\n(lub użyj przycisku poniżej, aby udostępnić kontakt)",
+  phone_question: "Wpisz numer telefonu:\n{length} cyfr bez spacji (np. 500600700)\n\nLub użyj przycisku poniżej, aby udostępnić swój kontakt:",
   car_name_question: "Wpisz markę i model auta (np. Volkswagen Golf):",
   engine_question: "Wpisz typ silnika (np. 1.4 TSI, 2.0 TDI):",
   vin_question: "Wpisz numer VIN (opcjonalnie):",
@@ -50,6 +50,7 @@ module.exports = {
     "Wystąpił problem techniczny i bieżące zgłoszenie zostało przerwane.\nZacznijmy od nowa — zajmie to tylko kilka minut.",
   skip_btn: "➡️ Pomiń",
   request_sending_error: "❌ Nie udało się wysłać zgłoszenia. Spróbuj ponownie później.",
-  send_contact_btn: "📞 Wyślij mój numer telefonu",
+  send_contact_btn: "📱 Udostępnij kontakt",
+  contact_received: "✅ Kontakt został otrzymany.",
   summary_call_button: "📞 Zadzwoń do klienta",
 };

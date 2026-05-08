@@ -7,6 +7,7 @@ jest.mock("../helpers/menu", () => ({
   showSummaryMenu: jest.fn(),
   renderOptional: jest.fn(),
   renderKeepButton: jest.fn(),
+  renderContactButton: jest.fn(() => "CONTACT_BUTTON"),
   sendMainMenu: jest.fn(() => "MAIN_MENU"),
 }));
 

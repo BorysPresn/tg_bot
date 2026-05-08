@@ -18,7 +18,6 @@ const { getLocalizedText } = require("./i18n");
 const { ACTIONS, BOT_URL } = require("./config/constants");
 const { createRequestMsg } = require("./helpers/textCreators");
 const steps = require("./config/steps");
-const { normalizePhone } = require("./helpers/validators");
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.use(session());
@@ -173,19 +172,23 @@ bot.on(message("text"), async (ctx) => {
 
 bot.on(message("contact"), async (ctx) => {
   initSession(ctx);
-  if(!hasActiveFlow(ctx)) return handleSessionLost(ctx);
 
-  const step = steps[ctx.session.stepIndex];
-  if(!step || step.key !== "phone") return;
-
-  const contact = ctx.message.contact;
-  if(!contact || !contact.phone_number) {
-    return ctx.reply(getLocalizedText(ctx.session.lang, "phone_error"))
+  if (!hasActiveFlow(ctx)) {
+    return handleSessionLost(ctx);
   }
 
-  ctx.session.form.phone = normalizePhone(contact.phone_number);
-  await goToNextStep(ctx);
-})
+  const step = steps[ctx.session.stepIndex];
+  if (!step) return;
+
+  if (step.key !== "phone") return;
+
+  await ctx.reply(
+    getLocalizedText(ctx.session.lang, "contact_received"),
+    Markup.removeKeyboard(),
+  );
+  return handleInput(ctx, ctx.message.contact.phone_number, { fromContact: true });
+}
+);
 bot.catch((err) => {
   console.error("BOT ERROR: ", err);
 });

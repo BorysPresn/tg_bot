@@ -55,7 +55,11 @@ function renderKeepButton(ctx) {
   return renderInlineKeyboard(ctx, ui.keep)
 }
 
-
+function renderContactButton(ctx) {
+  return Markup.button.contactRequest(
+    getLocalizedText(ctx.session.lang, ui.contact.textKey),
+  );
+}
 function showSummaryMenu(ctx) {
   const title = createSummaryTitle(ctx);
   const text = createSummaryText(ctx);
@@ -70,4 +74,5 @@ module.exports = {
   showSummaryMenu,
   renderOptional,
   renderKeepButton,
+  renderContactButton,
 };
