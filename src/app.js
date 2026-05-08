@@ -5,7 +5,10 @@ const PORT = process.env.PORT || 3000;
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:5173";
 const contactRoute = require("./api/contact.routes");
 const rateLimit = require("express-rate-limit");
+
 const app = express();
+
+app.set("trust proxy", 1);
 
 app.use(
   cors({
@@ -14,6 +17,7 @@ app.use(
 );
 
 app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send("S.O.M. bot API is running");
 });
@@ -25,7 +29,7 @@ const contactFormLimiter = rateLimit({
   legacyHeaders: false,
   message: {
     ok: false,
-    message: "To many requests. Please try again later.",
+    message: "Too many requests. Please try again later.",
   },
 });
 
