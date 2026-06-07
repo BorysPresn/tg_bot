@@ -3,6 +3,7 @@ const { normalizePhone } = require("./validators");
 const phonePattern = /^\+48\d{9}$/;
 const vinAllowedCharsPattern = /^[A-HJ-NPR-Z0-9]+$/i;
 const forbiddenVinCharsPattern = /[IOQ]/i;
+const fullNameAllowedCharsPattern = /^\p{L}+(?:[-' ]\p{L}+)*$/u;
 
 const validateContactForm = (data = {}) => {
   const errors = {};
@@ -18,6 +19,8 @@ const validateContactForm = (data = {}) => {
     errors.fullName = "Full name is required";
   } else if (fullName.length > 80) {
     errors.fullName = "Full name is too long";
+  } else if (!fullNameAllowedCharsPattern.test(fullName)) {
+    errors.fullName = "Invalid full name format";
   }
 
   if (!phonePattern.test(phone)) {
