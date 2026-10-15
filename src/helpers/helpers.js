@@ -9,7 +9,6 @@ function initSession(ctx) {
 
 function detectLang(ctx) {
   const userLang = ctx.from.language_code;
-  console.log("lang: ", userLang);
   if (LANGUAGES.includes(userLang)) {
     return userLang;
   }
@@ -21,5 +20,12 @@ function format(text, params = {}) {
     return params[key] ?? `{${key}}`;
   });
 }
-
-module.exports = { initSession, detectLang, format };
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+module.exports = { initSession, detectLang, format, escapeHtml };

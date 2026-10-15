@@ -1,13 +1,5 @@
 const { getLocalizedText } = require("../i18n");
-
-function escapeHtml(text) {
-  return String(text)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
+const { escapeHtml } = require("./helpers");
 
 function createSummaryText(ctx) {
   const form = ctx.session.form;
@@ -55,5 +47,16 @@ function createRequestMsg(ctx) {
 function createSummaryTitle(ctx) {
   return `${getLocalizedText(ctx.session.lang, "summary_title")}\n\n`;
 }
-
-module.exports = { createSummaryText, createSummaryTitle, createRequestMsg };
+function createCallbackText(body) {
+  return [
+    `<b>Запрос звонка</b>`,
+    `<b>Имя:</b> ${escapeHtml(body.fullName)}`,
+    `<b>Телефон:</b> ${body.phone}`,
+  ].join("\n");
+}
+module.exports = {
+  createSummaryText,
+  createSummaryTitle,
+  createRequestMsg,
+  createCallbackText,
+};

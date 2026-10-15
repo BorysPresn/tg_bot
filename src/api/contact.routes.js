@@ -2,12 +2,12 @@ const express = require("express");
 const validateContactForm = require("../helpers/contactFormValidator");
 const { sendContactEmail } = require("../services/mail.sevices");
 
-const router = express.Router();
-
 module.exports = (bot) => {
+  const router = express.Router();
+
   router.post("/", async (req, res) => {
     try {
-      if (req.body.website) {
+      if (req.body?.website) {
         return res.status(400).json({
           ok: false,
           message: "Spam detected",
