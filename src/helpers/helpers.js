@@ -9,7 +9,6 @@ function initSession(ctx) {
 
 function detectLang(ctx) {
   const userLang = ctx.from.language_code;
-  console.log("lang: ", userLang);
   if (LANGUAGES.includes(userLang)) {
     return userLang;
   }
