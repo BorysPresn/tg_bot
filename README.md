@@ -159,6 +159,22 @@ If the session is lost, the bot returns the user to the main menu.
 
 ---
 
+## Website Callback API
+
+`POST /api/callback` accepts JSON with `fullName`, `phone` (`+48` and nine digits), and an optional `website` honeypot. Valid requests are sent to Telegram and email. The response is `200` with `ok: true` if at least one channel accepts the request, or `502` if both fail. Failed channels are logged; failed copies are not retried automatically.
+
+Required backend settings: `TELEGRAM_CHAT_ID`, `RESEND_API_KEY`, `MAIL_FROM`, and `MAIL_TO`, alongside the existing bot configuration. Never put bot or email credentials in frontend environment variables.
+
+For production, configure exact allowed browser origins without trailing slashes:
+
+```env
+CLIENT_ORIGINS=https://auto-som.pl,https://promo.auto-som.pl
+```
+
+For local development use `CLIENT_ORIGINS=http://localhost:5173`. If `CLIENT_ORIGINS` is absent, the existing `CLIENT_ORIGIN` is supported; with neither set, the default is `http://localhost:5173`. Localhost is not automatically allowed in production. CORS controls browser access and is not an authentication or anti-spam mechanism.
+
+Both website endpoints currently share a rate limit of five requests per ten minutes per IP. Run `npm test` before deploying. The tests use mocked email and Telegram senders and do not deliver real notifications.
+
 ## License
 
 MVP for Serwis S.O.M.

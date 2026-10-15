@@ -2,19 +2,16 @@ const bot = require("./bot");
 const express = require("express");
 const cors = require("cors");
 const PORT = process.env.PORT || 3000;
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:5173";
+const createCorsOptions = require("./config/cors");
 const contactRoute = require("./api/contact.routes");
 const rateLimit = require("express-rate-limit");
+const callbackRoute = require("./api/callback.routes");
 
 const app = express();
 
 app.set("trust proxy", 1);
 
-app.use(
-  cors({
-    origin: CLIENT_ORIGIN,
-  }),
-);
+app.use(cors(createCorsOptions()));
 
 app.use(express.json());
 
@@ -22,7 +19,7 @@ app.get("/", (req, res) => {
   res.send("S.O.M. bot API is running");
 });
 
-const contactFormLimiter = rateLimit({
+const limiter = rateLimit({
   windowMs: 10 * 60 * 1000, //10min
   max: 5,
   standardHeaders: true,
@@ -31,10 +28,10 @@ const contactFormLimiter = rateLimit({
     ok: false,
     message: "Too many requests. Please try again later.",
   },
-
 });
 
-app.use("/api/contact", contactFormLimiter, contactRoute(bot));
+app.use("/api/contact", limiter, contactRoute(bot));
+app.use("/api/callback", limiter, callbackRoute(bot));
 
 process.on("uncaughtException", (err) => {
   console.error("uncaughtException: ", err);
